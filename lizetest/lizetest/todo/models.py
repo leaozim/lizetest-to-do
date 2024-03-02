@@ -6,7 +6,7 @@ from lizetest.core.models import BaseModel
 from lizetest.accounts.models import User
 
 
-class Category(models.Model):
+class Category(BaseModel):
     name = models.CharField(max_length=255)
 
     def __str__(self):
