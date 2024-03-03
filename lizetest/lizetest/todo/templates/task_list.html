@@ -1,16 +1,40 @@
 {% extends 'base.html' %}
 
-{% block content %}
-  <h2>Task List</h2>
-  <ul>
-    {% for task in tasks %}
-      <li>
-        {{ task.title }} - {{ task.description }} - {{ task.category }} 
-        <a href="{% url 'todo:task_edit' pk=task.pk %}">Editar</a>
-        <a href="{% url 'todo:task_delete' pk=task.pk %}">Remover</a>
+	{% block body %}
+	{% block nav_header %}
+		{% include 'header.html' %}
+	{% endblock %}
 
-      </li>
-    {% endfor %}
-  </ul>
-  <a href="{% url 'todo:task_create' %}">Add Task</a>
-{% endblock %}
+	{% block nav_sidebar %}
+		{% include 'sidebar.html' %}
+	{% endblock %}
+
+	{% block content_wrapper %}
+	<div class="content-wrapper" >
+			{% block content_header %}
+			<div class="m-3">
+				<h2>Task List</h2>
+				<ul>
+					{% for task in tasks %}
+						<li>
+							<div data-widget="todo-list">
+								<input type="checkbox" name="is_closed" value="closed" {% if 'closed' in is_closed %} checked {% endif %}>
+
+								{{ task.title }} - {{ task.description }} - {{ task.category }} 
+								<a href="{% url 'todo:task_edit' pk=task.pk %}">Editar</a>
+								<a href="{% url 'todo:task_delete' pk=task.pk %}">Remover</a>
+							</div>
+						</li>
+					{% endfor %}
+				</ul>
+			<a href="{% url 'todo:task_create' %}">Add Task</a>
+			</div>
+		{% endblock %}
+
+	</div>
+	{% endblock content_wrapper %}
+{% endblock body %}
+
+
+
+

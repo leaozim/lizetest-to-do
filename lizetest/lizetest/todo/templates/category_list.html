@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block body %}
+	{% block nav_header %}
+		{% include 'header.html' %}
+  	{% endblock %}
+
+  	{% block nav_sidebar %}
+		{% include 'sidebar.html' %}
+  	{% endblock %}
+
+
+	{% block content_wrapper %}
+	<div class="content-wrapper">
+	  {% block content_header %}
+	  <h2>Category List</h2>
+	  <ul>
+		{% for category in categories %}
+		  <li>
+		  {{ category.name}} -
+
+		  <a href="{% url 'todo:category_edit' pk=category.pk %}">Editar</a>
+			<a href="{% url 'todo:category_delete' pk=category.pk %}">Remover</a> 
+
+		  </li>
+		{% endfor %}
+	  </ul>
+	  <a href="{% url 'todo:category_create' %}">Add Category</a>
+	  {% endblock content_header %}  
+
+	{% endblock content_wrapper %}  
+  {% endblock body %}

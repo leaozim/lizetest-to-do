@@ -1,0 +1,31 @@
+{% extends 'adminlte/lib/_main_header.html' %}
+{% load i18n %}
+
+{% block nav_bar %}
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
+        </li>
+    </ul>
+
+        {% block nav_custom_menu %}
+        <ul class="navbar-nav ml-auto">
+            <ul class="nav navbar-nav">
+                {% block header_dropdowns %}            
+                        {% if request.user.is_authenticated %}
+                <li class="nav-item dropdown">
+                        
+                            <div class="dropdown-footer">
+                                <a href="{% url 'accounts:logout' %}" class="btn btn-danger btn-sm">{% trans 'Sign out' %}</a>
+                            </div>
+                            
+                        </div>
+                    </li>
+                {% endif %}
+        
+                {% endblock header_dropdowns %}
+            </ul>
+        </ul>
+        {% endblock nav_custom_menu %}
+
+{% endblock %}

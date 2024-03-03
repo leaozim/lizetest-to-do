@@ -1,11 +1,17 @@
-{% extends 'base.html' %}
+{% extends "adminlte/login.html" %}
+{% block title %}To-Do List{% endblock %}
 
-{% block content %}
-  <h2>Login</h2>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Login</button>
-  </form>
-  <a href="{% url 'accounts:signup' %}">Don't have an account? Sign up here.</a>
+{% block logo %}
+<div class="login-logo">
+		<a href="{% block logo_href %}/{% endblock %}">{% block logo_text %}<b>To-Do List</b>{% endblock %}</a>
+</div>
+{% endblock %}
+{% block form %}
+	<h2>Login</h2>
+	<form method="post">
+		{% csrf_token %}
+		{{ form.as_p }}
+		<button type="submit">Login</button>
+	</form>
+	<a href="{% url 'accounts:signup' %}">Don't have an account? Sign up here.</a>
 {% endblock %}

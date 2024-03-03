@@ -1,11 +1,24 @@
-{% extends 'base.html' %}
-
+{% extends 'layouts/auth_base.html' %}
 {% block content %}
-  <h2>Sign Up</h2>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Sign Up</button>
-  </form>
-  <a href="{% url 'accounts:login' %}">Already have an account? Log in here.</a>
+	<h2>Sign Up</h2>
+	<form method="post">
+		{% csrf_token %}
+		{% for hidden in form.hidden_fields %}
+		{{ hidden }}
+		{% endfor %}
+		{% for field in form.visible_fields %}
+			<div >
+				<label for="{{ field.id_for_label }}">{{ field.label }}</label>        
+				<div>{{field}}</div>
+				{% for error in field.errors %}
+				<div class="invalid-feedback">
+					{{ error }}
+				</div>
+				{% endfor %}
+			<div>
+		{% endfor %}
+		<button type="submit">Sign up</button>
+
+		</form>
+	<a href="{% url 'accounts:login' %}">Already have an account? Log in here.</a>
 {% endblock %}
