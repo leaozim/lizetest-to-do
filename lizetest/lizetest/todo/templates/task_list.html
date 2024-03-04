@@ -1,40 +1,53 @@
 {% extends 'base.html' %}
-
-	{% block body %}
+{% load static %}
+{% block body %}
 	{% block nav_header %}
-		{% include 'header.html' %}
-	{% endblock %}
+	{% include 'header.html' %}
+{% endblock %}
 
-	{% block nav_sidebar %}
-		{% include 'sidebar.html' %}
-	{% endblock %}
+{% block nav_sidebar %}
+	{% include 'sidebar.html' %}
+{% endblock %}
 
-	{% block content_wrapper %}
-	<div class="content-wrapper" >
-			{% block content_header %}
-			<div class="m-3">
-				<h2>Task List</h2>
-				<ul>
-					{% for task in tasks %}
-						<li>
-							<div data-widget="todo-list">
-								<input type="checkbox" name="is_closed" value="closed" {% if 'closed' in is_closed %} checked {% endif %}>
-
-								{{ task.title }} - {{ task.description }} - {{ task.category }} 
-								<a href="{% url 'todo:task_edit' pk=task.pk %}">Editar</a>
-								<a href="{% url 'todo:task_delete' pk=task.pk %}">Remover</a>
+{% block content_wrapper %}
+	<div class="content-wrapper  h-100" >
+		{% block content_header %}
+			<div class="content-header">
+				<h1 class="mb-3">Task List</h1>
+				<ul>					
+				{% for task in tasks %}
+					<lu>
+						<div class="row border border-whith rounded ali mt-8 m-2"  >	
+							<div class="col ml-auto" >						
+								<input type="checkbox" class="checkbox-class" type="checkbox" value="" id="checkboxid" data-task-id="{{ task.id }}">
+								{{ task.title }} - {{ task.description }}
 							</div>
-						</li>
-					{% endfor %}
+							<div  class="col"  >
+								{{ task.category }}
+							</div>
+							<div  class="col ml-auto mb-2 row">
+								<div>
+									<a class="col ml-auto " href="{% url 'todo:task_edit' pk=task.pk %}">Editar</a>
+								</div>
+								<div>
+									<a class="col mr-auto" href="{% url 'todo:task_delete' pk=task.pk %}">Remover</a>
+								</div>
+							</div>
+						</div>
+					</lu>
+				{% endfor %}
 				</ul>
-			<a href="{% url 'todo:task_create' %}">Add Task</a>
-			</div>
-		{% endblock %}
+				<a href="{% url 'todo:task_create' %}">Add Task</a>
+			<div>
+			{% endblock content_header %}
 
+		{% endblock content_wrapper %}
 	</div>
-	{% endblock content_wrapper %}
+
 {% endblock body %}
 
-
-
+</div>
+{% block javascript %}
+	<script src="{% static 'app.js' %}"></script>
+{% endblock %}
 

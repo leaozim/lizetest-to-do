@@ -66,6 +66,10 @@ class CategoryCreateView(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy('todo:category_list')
     
     def form_valid(self, form):
+        if Category.objects.filter(name=form.instance.name).exists():
+            form.add_error('name', 'This category name already exists.')
+            return self.form_invalid(form)
+        
         form.instance.author = self.request.user
         return super().form_valid(form)
 
