@@ -26,10 +26,10 @@
 							{{ category.name}} 
 						</div>
 						<div>
-							<a class="btn btn-outline-primary" href="{% url 'todo:category_edit' pk=category.pk %}">Editar</a>
+							<a class="btn btn-outline-primary" href="{% url 'todo:category_edit' pk=category.pk %}">Edit</a>
 						</div>
 						<div class="ml-4">
-							<a  class="btn btn-outline-danger"  href="{% url 'todo:category_delete' pk=category.pk %}">Remover</a> 
+							<a  class="btn btn-outline-danger"  href="{% url 'todo:category_delete' pk=category.pk %}">Remove</a> 
 						</div>
 					</div>	
 			{% endfor %}
