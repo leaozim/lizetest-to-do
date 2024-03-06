@@ -1,25 +1,42 @@
 <!-- task_confirm_delete.html -->
 {% extends 'base.html' %}
 {% block body %}
-	{% block nav_header %}
-		{% include 'header.html' %}
-	{% endblock %}
+	{% block navigation_header %}
+		{% include 'navigation_header.html' %}
+	{% endblock navigation_header %}
 
-	{% block nav_sidebar %}
-		{% include 'sidebar.html' %}
-	{% endblock %}
-
+	{% block navigation_sidebar %}
+		{% include 'navigation_sidebar.html' %}	
+	{% endblock navigation_sidebar %}
+	
 	{% block content_wrapper %}
 		<div class="content-wrapper">
-		{% block content_header %}
-			<h2>Confirm Deletion</h2>
-			<p>Are you sure you want to delete the task "{{ object.title }}"?</p>
-			<form method="post">
-				{% csrf_token %}
-				<button type="submit">Confirm</button>
-			</form>
-			<a href="{% url 'todo:task_list' %}">Cancel</a>
-		{% endblock content_header %}  
-	</div>
-	{% endblock content_wrapper %}  
+		<!-- Content Header (Page header) -->
+			<div class="content-header">
+				<div class="container-fluid">
+					<div class="row mb-2">
+						<div class="col-sm-6">
+							<h1 class="m-0 text-dark">Confirm Deletion</h1>
+							<h6 class="m-2">Are you sure you want to delete the task "{{ object.title }}"?</h6>
+							<form method="post">
+								{% csrf_token %}
+								<button type="submit" class="btn btn-outline-success">Confirm</button>
+							<a class="btn btn-outline-danger"href="{% url 'todo:task_list' %}">Cancel</a>
+						</form>
+
+						</div>
+					</div>			
+				</div>
+			</div>
+		</div>
+
+{% endblock content_wrapper %}  
+{% block nav_footer %}
+	{% include 'navigation_footer.html' %}
+{% endblock nav_footer %}
+
+{% block scripts %}
+	{% include 'scripts.html' %}
+{% endblock scripts %}
+
 {% endblock body %}

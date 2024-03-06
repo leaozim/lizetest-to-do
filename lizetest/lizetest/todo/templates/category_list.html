@@ -1,31 +1,40 @@
 {% extends 'base.html' %}
 {% block body %}
-	{% block nav_header %}
-		{% include 'header.html' %}
-  	{% endblock %}
+{% block navigation_header %}
+	{% include 'navigation_header.html' %}
+{% endblock navigation_header %}
 
-  	{% block nav_sidebar %}
-		{% include 'sidebar.html' %}
-  	{% endblock %}
+{% block navigation_sidebar %}
+	{% include 'navigation_sidebar.html' %}	
+{% endblock navigation_sidebar %}
 
 
 	{% block content_wrapper %}
 	<div class="content-wrapper">
-	  {% block content_header %}
-	  <h2>Category List</h2>
-	  <ul>
-		{% for category in categories %}
-		  <li>
-		  {{ category.name}} -
+		{% block content_header %}
 
-		  <a href="{% url 'todo:category_edit' pk=category.pk %}">Editar</a>
-			<a href="{% url 'todo:category_delete' pk=category.pk %}">Remover</a> 
+		<!-- Content Header (Page header) -->
+		<div class="content-header">
+			<div class="container-fluid">
+				<div class="row mb-2">
+					<div class="col-sm-6">
+						<h1 class="m-0 text-dark">Categories</h1>
+					</div><!-- /.col -->
+				</div><!-- /.row -->
+			</div><!-- /.container-fluid -->
+		</div>
+		{% endblock content_header %}	
 
-		  </li>
-		{% endfor %}
-	  </ul>
-	  <a href="{% url 'todo:category_create' %}">Add Category</a>
-	  {% endblock content_header %}  
+		<ul>
+			{% for category in categories %}
+				<li>
+					{{ category.name}} -
+					<a href="{% url 'todo:category_edit' pk=category.pk %}">Editar</a>
+					<a href="{% url 'todo:category_delete' pk=category.pk %}">Remover</a> 
+				</li>
+			{% endfor %}
+		</ul>
+		<a href="{% url 'todo:category_create' %}">Add Category</a>
 
 	{% endblock content_wrapper %}  
   {% endblock body %}

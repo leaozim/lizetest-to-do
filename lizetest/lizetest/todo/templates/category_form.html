@@ -1,16 +1,15 @@
-{% extends 'base.html' %}
+{% extends 'index.html' %}
 {% block body %}
-	{% block nav_header %}
-		{% include 'header.html' %}
-	{% endblock %}
+	{% block navigation_header %}
+		{% include 'navigation_header.html' %}
+	{% endblock navigation_header %}
 
-	{% block nav_sidebar %}
-		{% include 'sidebar.html' %}
-	{% endblock %}
+	{% block navigation_sidebar %}
+		{% include 'navigation_sidebar.html' %}	
+	{% endblock navigation_sidebar %}
 
 		{% block content_wrapper %}
 		<div class="content-wrapper">
-			{% block content_header %}
 			<h2>{% if request.resolver_match.url_name == 'category_create' %}Create{% else %}Edit{% endif %} Category</h2>
 			<form method="post" enctype="multipart/form-data">
 				{% csrf_token %}
@@ -19,7 +18,6 @@
 			</form>
 			<a href="{% url 'todo:category_list' %}">Back to Category List</a>
 
-{% endblock content_header %}  
 
 {% endblock content_wrapper %}  
 {% endblock body %}

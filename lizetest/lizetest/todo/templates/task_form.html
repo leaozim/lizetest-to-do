@@ -1,12 +1,13 @@
 {% extends 'base.html' %}
 {% block body %}
-	{% block nav_header %}
-		{% include 'header.html' %}
-	{% endblock %}
 
-	{% block nav_sidebar %}
-		{% include 'sidebar.html' %}
-	{% endblock %}
+	{% block navigation_header %}
+		{% include 'navigation_header.html' %}
+	{% endblock navigation_header %}
+
+	{% block navigation_sidebar %}
+		{% include 'navigation_sidebar.html' %}	
+	{% endblock navigation_sidebar %}
 
 	{% block content_wrapper %}
 		<div class="content-wrapper">

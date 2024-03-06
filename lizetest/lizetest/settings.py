@@ -42,10 +42,6 @@ INSTALLED_APPS = [
     'lizetest.todo',
     'lizetest.core',
     'lizetest.accounts',
-     # General use templates & template tags (should appear first)
-    'adminlte3',
-     # Optional: Django admin theme (must be before django.contrib.admin)
-    'adminlte3_theme',
 ]
 
 MIDDLEWARE = [
@@ -126,7 +122,9 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+STATIC_ROOT = os.path.join(BASE_DIR,  'static')
 
+# MEDIA_ROOT = os.path.join(BASE_DIR,  'static')
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
