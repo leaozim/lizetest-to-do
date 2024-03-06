@@ -3,10 +3,10 @@ from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.http import HttpResponseForbidden
+from django.shortcuts import render
 
 from .models import Task, Category
 from .forms import TaskForm, CategoryForm
-
 
 
 class TaskListView(LoginRequiredMixin, ListView):
@@ -27,6 +27,11 @@ class TaskCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance.author = self.request.user
         return super().form_valid(form)
+    
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['author'] = self.request.user
+        return kwargs
 
 
 class TaskUpdateView(LoginRequiredMixin, UpdateView):
@@ -34,6 +39,11 @@ class TaskUpdateView(LoginRequiredMixin, UpdateView):
     form_class = TaskForm
     template_name = 'task_form.html'
     success_url = reverse_lazy('todo:task_list')
+    
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['author'] = self.request.user
+        return kwargs
 
 
 class TaskDeleteView(LoginRequiredMixin, DeleteView):
@@ -44,9 +54,8 @@ class TaskDeleteView(LoginRequiredMixin, DeleteView):
     def post(self, request, *args, **kwargs):
         task = self.get_object()
         if task.completed:
-            return HttpResponseForbidden("Você não tem permissão.")
+            return render(request, self.template_name, {'task_completed': True})
         return super().delete(request, *args, **kwargs)
-            
             
             
 class CategoryListView(LoginRequiredMixin, ListView):
@@ -72,6 +81,7 @@ class CategoryCreateView(LoginRequiredMixin, CreateView):
         
         form.instance.author = self.request.user
         return super().form_valid(form)
+
 
 class CategoryUpdateView(LoginRequiredMixin, UpdateView):
     model = Category

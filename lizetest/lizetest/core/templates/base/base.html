@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+
+	<title>{% block title %} To-do List{% endblock title %}</title>
+	
+	{% include  'base/styles.html' %}	
+</head>
+
+
+{% block body %}
+<body class="hold-transition sidebar-mini">
+	<div class="wrapper">
+		{% include '../components/navigation_header.html' %}
+
+		{% include '../components/navigation_sidebar.html' %}	
+			
+		{% block content_wrapper %}
+		{% endblock content_wrapper %}
+	</div>
+	{% include 'base/scripts.html' %}
+
+</body>
+{% endblock body %}
+</html>
+
+

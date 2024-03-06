@@ -1,4 +1,7 @@
 const checkboxes = document.querySelectorAll('.checkbox-class');
+const deleteModal = document.getElementById("deleteModal");
+
+
 checkboxes.forEach(checkbox => {
     checkbox.addEventListener('change', function() {
         handleCheckboxChange(checkbox);
@@ -32,3 +35,16 @@ function getCookie(name) {
     }
     return null;
 }
+
+  
+
+
+console.log( "sssssssssssssssssss")
+
+window.addEventListener("click", function (event) {
+    console.log( "sssssssssssssssssss")
+	if (event.target == deleteModal) {
+		deleteModal.style.display = "block";
+	}
+
+});

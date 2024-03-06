@@ -1,25 +1,54 @@
-{% extends 'base.html' %}
-{% block body %}
+{% extends 'base/base.html' %}
+{% load i18n static %}
 
-	{% block navigation_header %}
-		{% include 'navigation_header.html' %}
-	{% endblock navigation_header %}
+{% block title %} Task {% endblock title %}
 
-	{% block navigation_sidebar %}
-		{% include 'navigation_sidebar.html' %}	
-	{% endblock navigation_sidebar %}
-
-	{% block content_wrapper %}
-		<div class="content-wrapper">
-		{% block content_header %}
-			<h2>{% if request.resolver_match.url_name == 'task_create' %}Create{% else %}Edit{% endif %} Task</h2>
-			<form method="post" enctype="multipart/form-data">
-				{% csrf_token %}
-				{{ form.as_p }}
-				<button type="submit">{% if request.resolver_match.url_name == 'task_create' %}Create{% else %}Save Changes{% endif %}</button>
-			</form>
-			<a href="{% url 'todo:task_list' %}">Back to Task List</a>
-		{% endblock content_header %}  
+{% block content_wrapper %}
+	<div class="content-wrapper">
+		<div class="content-header">
+			<div class="container-fluid pl-0">
+				<div class="row ">
+					<div class="col-sm-6">
+						<h1 class="m-0 text-dark">{% if request.resolver_match.url_name == 'task_create' %}Create{% else %}Edit{% endif %} Task</h1>
+					</div>
+				</div>
+			</div>
 		</div>
-	{% endblock content_wrapper %}  
-{% endblock body %}
+	<div>
+	</div>
+	{% block form_erros %}
+		{% include 'components/form_erros.html' %}	
+	{% endblock form_erros %}
+	<form method="post" enctype="multipart/form-data">
+		{% csrf_token %}
+		<div class="border p-2 bl-5 rounded mt-8 m-2 list-unstyled flex-column">
+			<div class="form-group has-feedback">
+				<label for="{{ form.title.id_for_label }}" class="form-label">Title</label>
+				<input class="form-control" id="{{ form.title.id_for_label }}" name="{{ form.title.name }}" value="{{ form.title.value|default_if_none:'' }}">
+			</div>
+			<div class="form-group has-feedback">
+				<label for="{{ form.description.id_for_label }}" class="form-label">Description</label>
+				<textarea class="form-control" id="{{ form.description.id_for_label }}" name="{{ form.description.name }}">{{ form.description.value|default_if_none:'' }}</textarea>
+			</div>
+			<div class="form-group has-feedback">
+			<label for="{{ form.category.id_for_label }}" class="form-label">Category</label>
+			<select class="form-control" name="{{ form.category.name }}" id="{{ form.category.id_for_label }}">
+				{% for categ in form.category.field.queryset %}
+					<option value="{{ categ.id }}" {% if categ.id == form.category.value %}selected{% endif %}>{{ categ.name }}</option>
+				{% endfor %}
+			</select>
+		</div>
+		<div class="content-header">
+			<div class="container-fluid pl-0">
+				<div class="row mb-2">
+					<div class="col-sm-6 pl-0">
+						<a class="btn btn-danger ml-2" href="{% url 'todo:task_list' %}">Cancel</a>
+						<button class="btn btn-success" type="submit">{% if request.resolver_match.url_name == 'task_create' %}Create{% else %}Save Changes{% endif %}</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+
+{% endblock content_wrapper %}  

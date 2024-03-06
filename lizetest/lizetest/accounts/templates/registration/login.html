@@ -1,29 +1,46 @@
-{% extends "adminlte/login.html" %}
+
+{% extends "base/base.html" %}
 {% load i18n static %}
 
-{% block title %}To-Do List{% endblock %}
+{% block body %}
+	<div class="hold-transition login-page">
+		<div class="login-box">
+			<div class="login-logo">
+				<b>To-do List</b>
+			</div>
+			{% if form.errors %}
+				<p class="alert alert-danger">
+					{% if form.errors.items|length == 1 %}{% trans "Please correct the error below." %}{% else %}
+						{% trans "Please correct the errors below." %}{% endif %}
+				</p>
+				{% for form, errors in form.errors.items %}
+					{% for error in errors %}
+						<p class="alert alert-danger">  {{ error }}</p>
+					{% endfor %}
+				{% endfor %}
+			{% endif %}
+			
+			<div class="card">
+				<div class="card-body login-card-body">
+				<p class="login-box-msg">Sign in to start your session</p>
+				<form method="post">
+					{% csrf_token %}
+					<div class="form-group has-feedback">
+						<input name="username" class="form-control" placeholder="{% trans 'Username' %}">
+						<span class="glyphicon glyphicon-user form-control-feedback"></span>
+					</div>
+					<div class="form-group has-feedback">
+						<input type="password" name="password" class="form-control" placeholder="{% trans 'Password' %}">
+						<span class="glyphicon glyphicon-lock form-control-feedback"></span>
+					</div>
 
-{% block logo %}
-<div class="login-logo">
-		<a href="{% block logo_href %}/{% endblock %}">{% block logo_text %}<b>To-Do List</b>{% endblock %}</a>
-</div>
-{% endblock %}
-{% block login_form %}
-	<form method="post">
-		{% csrf_token %}
-		<div class="form-group has-feedback">
-			<input name="username" class="form-control" placeholder="{% trans 'Username' %}">
-			<span class="glyphicon glyphicon-user form-control-feedback"></span>
-		</div>
-		<div class="form-group has-feedback">
-			<input type="password" name="password" class="form-control" placeholder="{% trans 'Password' %}">
-			<span class="glyphicon glyphicon-lock form-control-feedback"></span>
-		</div>
-		<div class="col-xs-4">
-			<button type="submit" class="btn btn-primary btn-block btn-flat">Login</button>
-		</div>
-	</form>
-
-
-	<a href="{% url 'accounts:signup' %}"> {% trans "Don't have an account? Sign up here."%}</a>
-{% endblock login_form %}
+					<div class="row">
+						<button type="submit" class="btn btn-primary btn-block">Sign In</button>
+					</div>
+				</form>
+				<p class="mb-0">
+					<a href="{% url 'accounts:signup' %}"> {% trans "Don't have an account? Sign up here."%}</a>		</p>
+				</div>
+			</div>
+	</div>
+{% endblock body %}

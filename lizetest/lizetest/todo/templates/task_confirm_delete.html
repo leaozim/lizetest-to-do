@@ -1,42 +1,35 @@
 <!-- task_confirm_delete.html -->
-{% extends 'base.html' %}
-{% block body %}
-	{% block navigation_header %}
-		{% include 'navigation_header.html' %}
-	{% endblock navigation_header %}
+{% extends 'base/base.html' %}
 
-	{% block navigation_sidebar %}
-		{% include 'navigation_sidebar.html' %}	
-	{% endblock navigation_sidebar %}
-	
-	{% block content_wrapper %}
-		<div class="content-wrapper">
-		<!-- Content Header (Page header) -->
-			<div class="content-header">
-				<div class="container-fluid">
-					<div class="row mb-2">
-						<div class="col-sm-6">
-							<h1 class="m-0 text-dark">Confirm Deletion</h1>
-							<h6 class="m-2">Are you sure you want to delete the task "{{ object.title }}"?</h6>
-							<form method="post">
-								{% csrf_token %}
-								<button type="submit" class="btn btn-outline-success">Confirm</button>
-							<a class="btn btn-outline-danger"href="{% url 'todo:task_list' %}">Cancel</a>
-						</form>
+{% block title %} Task Delete {% endblock title %}
 
+{% block content_wrapper %}
+	<div class="content-wrapper">
+		<div class="content-header">
+			<div class="container-fluid">
+				<div class="row mb-2">
+					<div class="col-sm-6">
+						{% if task_completed %}
+							<div class="alert alert-danger" >
+								You cannot delete a completed task.
+							</div>
+						{% endif %}
+
+						<h1 class="m-0 text-dark">Confirm Deletion</h1>
+						<div class="  pb-4 pt-3"  >	
+							<h5 class= "m-0 text-dark">Are you sure you want to delete the task "{{ object.title }}"?</h5>
 						</div>
-					</div>			
-				</div>
+						<form method="post">
+							{% csrf_token %}
+						<a class="btn btn-danger"href="{% url 'todo:task_list' %}">Cancel</a>
+						<button type="submit" class="btn btn-success">Confirm</button>
+
+					</form>
+
+					</div>
+				</div>			
 			</div>
 		</div>
-
+	</div>
 {% endblock content_wrapper %}  
-{% block nav_footer %}
-	{% include 'navigation_footer.html' %}
-{% endblock nav_footer %}
 
-{% block scripts %}
-	{% include 'scripts.html' %}
-{% endblock scripts %}
-
-{% endblock body %}

@@ -8,6 +8,12 @@ class TaskForm(forms.ModelForm):
         model = Task
         fields = ['title', 'description', 'category']
         
+    def __init__(self, *args, **kwargs):
+        author = kwargs.pop('author', None)
+        super(TaskForm, self).__init__(*args, **kwargs)
+
+        if author:
+            self.fields['category'].queryset = Category.objects.filter(author=author)
 
 class CategoryForm(forms.ModelForm):
     class Meta:

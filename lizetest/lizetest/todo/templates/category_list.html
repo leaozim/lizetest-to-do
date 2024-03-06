@@ -1,40 +1,40 @@
-{% extends 'base.html' %}
-{% block body %}
-{% block navigation_header %}
-	{% include 'navigation_header.html' %}
-{% endblock navigation_header %}
+{% extends 'base/base.html' %}
+{% load static %}
 
-{% block navigation_sidebar %}
-	{% include 'navigation_sidebar.html' %}	
-{% endblock navigation_sidebar %}
+{% block title %} Categories {% endblock title %}
 
-
-	{% block content_wrapper %}
-	<div class="content-wrapper">
-		{% block content_header %}
-
-		<!-- Content Header (Page header) -->
+{% block content_wrapper %}
+	<div class="content-wrapper  h-100" >
 		<div class="content-header">
 			<div class="container-fluid">
-				<div class="row mb-2">
+				<div class="row">
 					<div class="col-sm-6">
 						<h1 class="m-0 text-dark">Categories</h1>
-					</div><!-- /.col -->
-				</div><!-- /.row -->
-			</div><!-- /.container-fluid -->
+					</div>
+				</div>
+			</div>
 		</div>
-		{% endblock content_header %}	
-
-		<ul>
-			{% for category in categories %}
-				<li>
-					{{ category.name}} -
-					<a href="{% url 'todo:category_edit' pk=category.pk %}">Editar</a>
-					<a href="{% url 'todo:category_delete' pk=category.pk %}">Remover</a> 
-				</li>
-			{% endfor %}
-		</ul>
-		<a href="{% url 'todo:category_create' %}">Add Category</a>
-
-	{% endblock content_wrapper %}  
-  {% endblock body %}
+		<div class="ml-0">					
+		{% for category in categories %}
+			<lu>
+				<div class="row border border-whith p-2 rounded  mt-7 m-2 align-items-center"  >	
+					<div class="col ml-auto" >						
+						{{ category.name}} 
+					</div>
+					<div>
+						<a class="btn btn-outline-primary" href="{% url 'todo:category_edit' pk=category.pk %}">Editar</a>
+					</div>
+					<div class="ml-4">
+						<a  class="btn btn-outline-danger"  href="{% url 'todo:category_delete' pk=category.pk %}">Remover</a> 
+					</div>
+				</div>
+			</lu>
+		{% endfor %}
+		</div>
+		<div class="row m-1 ">
+			<div class="col-sm-6">
+				<a class="btn btn-outline-primary" href="{% url 'todo:category_create' %}">Add Category</a>
+			</div>
+		</div>
+	<div>
+{% endblock content_wrapper %}

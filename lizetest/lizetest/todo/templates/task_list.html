@@ -1,73 +1,49 @@
-{% extends 'base.html' %}
-{% load static %}
+{% extends 'base/base.html' %}
+{% load i18n static %}
 
-{% block body %}
+{% block title %} Tasks {% endblock title %}
 
-	{% block navigation_header %}
-		{% include 'navigation_header.html' %}
-	{% endblock navigation_header %}
+{% block content_wrapper %}
 
-	{% block navigation_sidebar %}
-		{% include 'navigation_sidebar.html' %}	
-	{% endblock navigation_sidebar %}
-
-	{% block content_wrapper %}
-
-	<div class="content-wrapper  h-100" >
-		{% block content_header %}
+	<div class="content-wrapper h-100" >
 		<div class="content-header">
 			<div class="container-fluid">
-				<div class="row mb-2">
+				<div class="row ">
 					<div class="col-sm-6">
 						<h1 class="m-0 text-dark">Tasks</h1>
 					</div>
 				</div>
 			</div>
-		</div>
-		{% endblock content_header %}		
-		<ul>					
+		</div>			
 		{% for task in tasks %}
 			<lu>
-				<div class="row border border-whith rounded ali mt-8 m-2"  >	
-					<div class="col ml-auto" >						
-						<input type="checkbox" class="checkbox-class" type="checkbox" value="" id="checkboxid" data-task-id="{{ task.id }}">
+				<div class="row border border-whith p-2 rounded mt-8 m-2 align-items-center"  >	
+					<div class="col ml-auto " >						
+						<input type="checkbox" class="checkbox-class" id="checkboxid{{ task.id }}" data-task-id="{{ task.id }}" {% if task.completed %}checked{% endif %}>
 						{{ task.title }} - {{ task.description }}
 					</div>
 					<div  class="col"  >
-						{{ task.category }}
+						{% if task.category %}
+							{{ task.category }}
+						{% endif %}
 					</div>
-					<div  class="col ml-auto mb-2 row">
-						<div>
-							<a class="col ml-auto " href="{% url 'todo:task_edit' pk=task.pk %}">Editar</a>
-						</div>
-						<div>
-							<a id="delete-task" class="col mr-auto" href="{% url 'todo:task_delete' pk=task.pk %}">Remover</a>
-						</div>
+					<div>
+						<a class="btn btn-outline-primary"  href="{% url 'todo:task_edit' pk=task.pk %}">Editar</a>
+					</div>
+					<div class="ml-4">
+						<a class="btn btn-outline-danger" href="{% url 'todo:task_delete' pk=task.pk %}">Remover</a>
 					</div>
 				</div>
 			</lu>
 		{% endfor %}
-		</ul>
-		<div class="content-header">
-			<div class="container-fluid">
-				<div class="row mb-2">
-					<div class="col-sm-6">
-						<a class="btn btn-outline-primary"href="{% url 'todo:task_create' %}">Add Task</a>
-
-					</div>
-				</div>
+		<div class="row mb-2 m-1 ">
+			<div class="col-sm-6">
+				<a class="btn btn-outline-primary"href="{% url 'todo:task_create' %}">Add Task</a>
 			</div>
 		</div>
 	<div>
-	{% endblock content_wrapper %}
+{% endblock content_wrapper %}
 
-	{% block scripts %}
-		{% include 'scripts.html' %}
-	{% endblock scripts %}
 
-	{% block nav_footer %}
-		{% include 'navigation_footer.html' %}
-	{% endblock nav_footer %}
 
-{% endblock body %}
 
