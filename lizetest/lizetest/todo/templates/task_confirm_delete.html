@@ -21,11 +21,9 @@
 						</div>
 						<form method="post">
 							{% csrf_token %}
-						<a class="btn btn-danger"href="{% url 'todo:task_list' %}">Cancel</a>
-						<button type="submit" class="btn btn-success">Confirm</button>
-
-					</form>
-
+							<a class="btn btn-danger"href="{% url 'todo:task_list' %}">Cancel</a>
+							<button type="submit" class="btn btn-success">Confirm</button>
+						</form>
 					</div>
 				</div>			
 			</div>

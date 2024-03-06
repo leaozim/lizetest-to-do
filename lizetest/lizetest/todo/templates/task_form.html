@@ -33,6 +33,7 @@
 			<div class="form-group has-feedback">
 			<label for="{{ form.category.id_for_label }}" class="form-label">Category</label>
 			<select class="form-control" name="{{ form.category.name }}" id="{{ form.category.id_for_label }}">
+				<option value=""></option>
 				{% for categ in form.category.field.queryset %}
 					<option value="{{ categ.id }}" {% if categ.id == form.category.value %}selected{% endif %}>{{ categ.name }}</option>
 				{% endfor %}

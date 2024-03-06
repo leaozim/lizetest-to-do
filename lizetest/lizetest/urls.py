@@ -22,6 +22,4 @@ urlpatterns = [
     path('', include('lizetest.todo.urls', namespace='todo')),
     path('accounts/', include('lizetest.accounts.urls', namespace='accounts')),
     path('api/', include('lizetest.todo.api.urls', namespace='api_tasks')),
-    path('core/', include('lizetest.core.urls')),
-
 ]

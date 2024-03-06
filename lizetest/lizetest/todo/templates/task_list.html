@@ -14,31 +14,52 @@
 					</div>
 				</div>
 			</div>
-		</div>			
-		{% for task in tasks %}
-			<lu>
+		</div>	
+		<lu>		
+			<div class="row border border-whith p-2 bg-info rounded mt-8 m-2 align-items-center">
+				<div class="col">
+					<strong class="m-0">Tasks</strong>
+				</div>
+				<div class="col text-center">
+					<strong class="m-0 ">Category</strong>
+				</div>
+				<div class="col">
+					<strong class="m-0"></strong>
+				</div>
+			</div>
+			{% for task in tasks %}
+			
 				<div class="row border border-whith p-2 rounded mt-8 m-2 align-items-center"  >	
-					<div class="col ml-auto " >						
-						<input type="checkbox" class="checkbox-class" id="checkboxid{{ task.id }}" data-task-id="{{ task.id }}" {% if task.completed %}checked{% endif %}>
-						{{ task.title }} - {{ task.description }}
+					<div class="col ">
+						<div class="d-flex ">
+							<input type="checkbox" class="checkbox-class" id="checkboxid{{ task.id }}" data-task-id="{{ task.id }}" {% if task.completed %}checked{% endif %}>
+							<p class="ml-2 mb-0 text-dark" >{{ task.title }}</p>
+						</div>
+						<p class="text-truncate text-dark" style="max-width: 250px;">Desc: {{ task.description }}</p>
 					</div>
-					<div  class="col"  >
+					<div  class="col text-center"  >
 						{% if task.category %}
-							{{ task.category }}
+							<p class="ml-2 mb-0 text-dark" >{{ task.category }}</p>
+							
 						{% endif %}
 					</div>
-					<div>
-						<a class="btn btn-outline-primary"  href="{% url 'todo:task_edit' pk=task.pk %}">Editar</a>
-					</div>
-					<div class="ml-4">
-						<a class="btn btn-outline-danger" href="{% url 'todo:task_delete' pk=task.pk %}">Remover</a>
+					<div class="col">
+						<div class="d-flex justify-content-end">
+							<div class="ml-2">
+								<a class="btn btn-outline-primary" href="{% url 'todo:task_edit' pk=task.pk %}">Editar</a>
+							</div>
+							<div class="ml-2">
+								<a class="btn btn-outline-danger" href="{% url 'todo:task_delete' pk=task.pk %}">Remover</a>
+							</div>
+						</div>
 					</div>
 				</div>
-			</lu>
-		{% endfor %}
+			
+			{% endfor %}
+		</lu>
 		<div class="row mb-2 m-1 ">
 			<div class="col-sm-6">
-				<a class="btn btn-outline-primary"href="{% url 'todo:task_create' %}">Add Task</a>
+				<a class="btn btn-primary"href="{% url 'todo:task_create' %}">Add Task</a>
 			</div>
 		</div>
 	<div>

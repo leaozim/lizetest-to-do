@@ -7,26 +7,20 @@
 		<div class="register-logo">
 			<b>To-do List</b>
 		</div>
-
 		<div class="card">
 			<div class="card-body register-card-body">
 			<p class="login-box-msg">Register a new membership</p>
-
-			{% block register_errors %}
-				{% if form.errors %}
-					<p class="alert alert-danger">
-						{% if form.errors.items|length == 1 %}{% trans "Please correct the error below." %}{% else %}
-							{% trans "Please correct the errors below." %}{% endif %}
-					</p>
-					{% for form, errors in form.errors.items %}
-						{% for error in errors %}
-							<p class="alert alert-danger">  {{form|title }}: {{ error }}</p>
-						{% endfor %}
+			{% if form.errors %}
+				<p class="alert alert-danger">
+					{% if form.errors.items|length == 1 %}{% trans "Please correct the error below." %}{% else %}
+						{% trans "Please correct the errors below." %}{% endif %}
+				</p>
+				{% for form, errors in form.errors.items %}
+					{% for error in errors %}
+						<p class="alert alert-danger">  {{form|title }}: {{ error }}</p>
 					{% endfor %}
-				{% endif %}
-			{% endblock register_errors %}
-
-			{% block register_form %}
+				{% endfor %}
+			{% endif %}
 			<form method="post">
 				{% csrf_token %}
 				<div class="form-group has-feedback">
@@ -42,19 +36,19 @@
 				</div>
 
 				<div class="form-group has-feedback">
-					<input id="{{ form.password1.id_for_label }}" for="{{ form.password1.id_for_label }}" name="{{ form.password1.name }}" class="form-control" placeholder="{{ form.password1.label }}" oninput="checkPassword()">
+					<input type="password" id="{{ form.password1.id_for_label }}" for="{{ form.password1.id_for_label }}" name="{{ form.password1.name }}" class="form-control" placeholder="{{ form.password1.label }}" oninput="checkPassword()">
 				</div>
 
 				<div class="form-group has-feedback">
-					<input id="{{ form.password2.id_for_label }}" for="{{ form.password2.id_for_label }}" name="{{ form.password2.name }}" class="form-control" placeholder="{{ form.password2.label }}" oninput="checkPassword()">
+					<input type="password" id="{{ form.password2.id_for_label }}" for="{{ form.password2.id_for_label }}" name="{{ form.password2.name }}" class="form-control" placeholder="{{ form.password2.label }}" oninput="checkPassword()">
 				</div>
 
 				<div id="errorPassword"></div>
+				
 				<div class="row">
-						<button type="submit" class="btn btn-primary btn-block">Register</button>
+					<button type="submit" class="btn btn-primary btn-block">Register</button>
 				</div>
 			</form>
-			{% endblock register_form %}
 
 			<a href="{% url 'accounts:login' %}" class="text-center">{% trans  "Already have an account? Log in here." %}</a>
 		</div>
