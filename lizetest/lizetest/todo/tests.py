@@ -58,7 +58,7 @@ class CategoryViewTests(TestCase):
         latest_task_created = Category.objects.last()
 
         self.assertFalse(form.is_valid())
-        self.assertEqual(form.errors['description'], ['Este campo é obrigatório.'])
+        self.assertEqual(form.errors['description'], ['This field is required.'])
         self.assertIsNone(latest_task_created) 
     
     
@@ -201,7 +201,7 @@ class TaskViewTests(TestCase):
         latest_task_created = Task.objects.last()
 
         self.assertFalse(form.is_valid())
-        self.assertEqual(form.errors['description'], ['Este campo é obrigatório.'])
+        self.assertEqual(form.errors['description'], ['This field is required.'])
         self.assertIsNone(latest_task_created) 
     
     

@@ -88,7 +88,7 @@ class SignupTestCase(TestCase):
         form = response.context["form"]
         
         self.assertFalse(form.is_valid())
-        self.assertEqual(form.errors['username'], ['Um usuário com este nome de usuário já existe.'])
+        self.assertEqual(form.errors['username'], ['A user with that username already exists.'])
         
         
     def test_signup_error_email_already_exist(self):
@@ -103,7 +103,7 @@ class SignupTestCase(TestCase):
         form = response.context["form"]
         
         self.assertFalse(form.is_valid())
-        self.assertEqual(form.errors['email'], ['Usuário com este Endereço de email já existe.'])          
+        self.assertEqual(form.errors['email'], ['Usuário with this Email address already exists.'])          
         
         
     def test_signup_error_weak_password(self):       
@@ -118,7 +118,7 @@ class SignupTestCase(TestCase):
         form = response.context["form"]
         
         self.assertFalse(form.is_valid())
-        self.assertEqual(form.errors['password2'], ['Esta senha é muito comum.', 'Esta senha é inteiramente numérica.'])  
+        self.assertEqual(form.errors['password2'], ['This password is too common.', 'This password is entirely numeric.'])  
             
              
 class LogoutTestCase(TestCase):  

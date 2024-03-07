@@ -1,4 +1,4 @@
-{% comment %} {% extends 'base/base.html' %}
+{% extends 'base/base.html' %}
 {% load i18n static %}
 
 {% block title %} Task {% endblock title %}
@@ -18,22 +18,8 @@
 	</div>
 	{% block form_erros %}
 		{% include 'components/form_erros.html' %}	
-	{% endblock form_erros %} {% endcomment %}
-	{% comment %} {% include 'components/form_erros.html' %}	 {% endcomment %}
-
-	{% if form.errors %}
-		{% if form.errors.items|length == 1 %}
-			<p class="alert alert-danger m-2">Please correct the error below. </p>
-		{% else %}
-			<p class="alert alert-danger m-2">Please correct the errors below. </p>
-		{% endif %}
-		{% for form, errors in form.errors.items %}
-			{% for error in errors %}
-				<p class="alert alert-danger m-2"> {{form|title }}: {{ error }}</p>
-			{% endfor %}
-		{% endfor %}
-	{% endif %}
-	<form class="edit-task-form" method="post" enctype="multipart/form-data">
+	{% endblock form_erros %}
+	<form method="post" enctype="multipart/form-data">
 		{% csrf_token %}
 		<div class="border p-2 bl-5 rounded mt-8 m-2 list-unstyled flex-column">
 			<div class="form-group has-feedback">
@@ -58,13 +44,13 @@
 			<div class="container-fluid pl-0">
 				<div class="row mb-2">
 					<div class="col-sm-6 pl-0">
-						<a class="btn btn-danger ml-2" href="{% url 'todo:task_list' %}" data-dismiss="modal">Cancel</a>
-						<button class="btn btn-success" type="submit">Save Changes</button>
+						<a class="btn btn-danger ml-2" href="{% url 'todo:task_list' %}">Cancel</a>
+						<button class="btn btn-success" type="submit">{% if request.resolver_match.url_name == 'task_create' %}Create{% else %}Save Changes{% endif %}</button>
 					</div>
 				</div>
 			</div>
 		</div>
 	</form>
-{% comment %} </div>
+</div>
 
-{% endblock content_wrapper %}   {% endcomment %}
+{% endblock content_wrapper %}  

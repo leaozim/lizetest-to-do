@@ -53,37 +53,3 @@ $(document).ready(function () {
         detailsModal.modal("show");
     });
 });
-
-let taskId;
-$(document).ready(function () {
-    $(".edit-btn").on("click", function () {
-        taskId = $(this).data("task-id");
-        console.log(taskId)
-        editUrl =  "task/" + taskId + "/edit/"
-        $.get(editUrl, function (data) {
-            console.log("Data received:", data);
-            console.log("Edit URL:", editUrl);
-            $("#editTaskFormContainer").html(data);
-            $("#editTaskModal").modal("show");
-        });
-    });
-    $(document).on("submit", ".edit-task-form", function (e) {
-        e.preventDefault();
-        console.log(taskId);
-        $(this).attr("action", "task/" + taskId + "/edit/");
-        this.submit();
-    });
-    $.post(url, form.serialize(), function (data) {
-        // Se houver erros, recarregue o modal com os erros
-        if (data.includes("class=\"alert alert-danger\"")) {
-            $("#editTaskFormContainer").html(data);
-            $("#editTaskModal").modal("show");
-        } else {
-            // Se não houver erros, pode redirecionar para a página de sucesso
-            window.location.reload();
-        }
-    });
-
-});
-
-

@@ -47,9 +47,7 @@
 								<a data-task-title="{{  task.title }}" data-task-desc="{{ task.description }}"  data-task-category="{{ task.category }}"class="btn btn-outline-info details-btn">Details</a>
 							</div>
 							<div class="ml-2">
-								{% comment %} <a class="btn btn-outline-primary edit-btn data-task-id="{{  task.pk  }}"" href="{% url 'todo:task_edit' pk=task.pk %}">Edit</a> {% endcomment %}
-								<a class="btn btn-outline-primary edit-btn" data-task-id="{{  task.pk  }}">Edit</a>
-
+								<a class="btn btn-outline-primary edit-btn" href="{% url 'todo:task_edit' pk=task.pk %}">Edit</a>
 							</div>
 							<div class="ml-2">
 								<a class="btn btn-outline-danger" href="{% url 'todo:task_delete' pk=task.pk %}">Remove</a>
@@ -57,7 +55,6 @@
 						</div>
 					</div>
 				</div>
-			
 			{% endfor %}
 		</lu>
 		<div class="row mb-2 m-1 ">
@@ -67,9 +64,6 @@
 		</div>
 	<div>
 {% include 'components/modal_details.html' %}	
-
-{% include 'components/modal_edit.html' %}  
-
 
 {% endblock content_wrapper %}
 
