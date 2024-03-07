@@ -33,6 +33,8 @@ class TaskCreateView(LoginRequiredMixin, CreateView):
         kwargs['author'] = self.request.user
         return kwargs
 
+from django.http import JsonResponse
+from django.core.serializers.json import DjangoJSONEncoder
 
 class TaskUpdateView(LoginRequiredMixin, UpdateView):
     model = Task
@@ -46,6 +48,11 @@ class TaskUpdateView(LoginRequiredMixin, UpdateView):
         return kwargs
 
 
+    def form_invalid(self, form):
+        html_content = render(self.request, 'components/modal_edit.html', {'form': form}).content
+        return JsonResponse({'error': True, 'html': html_content.decode()})
+
+    
 class TaskDeleteView(LoginRequiredMixin, DeleteView):
     model = Task
     template_name = 'task_confirm_delete.html'

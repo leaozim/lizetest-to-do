@@ -1,4 +1,4 @@
-{% extends 'base/base.html' %}
+{% comment %} {% extends 'base/base.html' %}
 {% load i18n static %}
 
 {% block title %} Task {% endblock title %}
@@ -18,8 +18,22 @@
 	</div>
 	{% block form_erros %}
 		{% include 'components/form_erros.html' %}	
-	{% endblock form_erros %}
-	<form method="post" enctype="multipart/form-data">
+	{% endblock form_erros %} {% endcomment %}
+	{% comment %} {% include 'components/form_erros.html' %}	 {% endcomment %}
+
+	{% if form.errors %}
+		{% if form.errors.items|length == 1 %}
+			<p class="alert alert-danger m-2">Please correct the error below. </p>
+		{% else %}
+			<p class="alert alert-danger m-2">Please correct the errors below. </p>
+		{% endif %}
+		{% for form, errors in form.errors.items %}
+			{% for error in errors %}
+				<p class="alert alert-danger m-2"> {{form|title }}: {{ error }}</p>
+			{% endfor %}
+		{% endfor %}
+	{% endif %}
+	<form class="edit-task-form" method="post" enctype="multipart/form-data">
 		{% csrf_token %}
 		<div class="border p-2 bl-5 rounded mt-8 m-2 list-unstyled flex-column">
 			<div class="form-group has-feedback">
@@ -31,25 +45,26 @@
 				<textarea class="form-control" id="{{ form.description.id_for_label }}" name="{{ form.description.name }}">{{ form.description.value|default_if_none:'' }}</textarea>
 			</div>
 			<div class="form-group has-feedback">
-			<label for="{{ form.category.id_for_label }}" class="form-label">Category</label>
-			<select class="form-control" name="{{ form.category.name }}" id="{{ form.category.id_for_label }}">
-				<option value=""></option>
-				{% for categ in form.category.field.queryset %}
-					<option value="{{ categ.id }}" {% if categ.id == form.category.value %}selected{% endif %}>{{ categ.name }}</option>
-				{% endfor %}
-			</select>
+				<label for="{{ form.category.id_for_label }}" class="form-label">Category</label>
+				<select class="form-control" name="{{ form.category.name }}" id="{{ form.category.id_for_label }}">
+					<option value=""></option>
+					{% for categ in form.category.field.queryset %}
+						<option value="{{ categ.id }}" {% if categ.id == form.category.value %}selected{% endif %}>{{ categ.name }}</option>
+					{% endfor %}
+				</select>
+			</div>
 		</div>
 		<div class="content-header">
 			<div class="container-fluid pl-0">
 				<div class="row mb-2">
 					<div class="col-sm-6 pl-0">
-						<a class="btn btn-danger ml-2" href="{% url 'todo:task_list' %}">Cancel</a>
-						<button class="btn btn-success" type="submit">{% if request.resolver_match.url_name == 'task_create' %}Create{% else %}Save Changes{% endif %}</button>
+						<a class="btn btn-danger ml-2" href="{% url 'todo:task_list' %}" data-dismiss="modal">Cancel</a>
+						<button class="btn btn-success" type="submit">Save Changes</button>
 					</div>
 				</div>
 			</div>
 		</div>
 	</form>
-</div>
+{% comment %} </div>
 
-{% endblock content_wrapper %}  
+{% endblock content_wrapper %}   {% endcomment %}

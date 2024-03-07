@@ -2,7 +2,6 @@
 {% load i18n static %}
 
 {% block title %} Tasks {% endblock title %}
-
 {% block content_wrapper %}
 
 	<div class="content-wrapper h-100" >
@@ -28,25 +27,29 @@
 				</div>
 			</div>
 			{% for task in tasks %}
-			
 				<div class="row border border-whith p-2 rounded mt-8 m-2 align-items-center"  >	
-					<div class="col ">
-						<div class="d-flex ">
-							<input type="checkbox" class="checkbox-class" id="checkboxid{{ task.id }}" data-task-id="{{ task.id }}" {% if task.completed %}checked{% endif %}>
-							<p class="ml-2 mb-0 text-dark" >{{ task.title }}</p>
+					<div class="col d-flex">
+						<input type="checkbox" class="checkbox-class" id="checkboxid{{ task.id }}" data-task-id="{{ task.id }}" {% if task.completed %}checked{% endif %}>
+						<div  class="col ">
+							<div class="d-flex">
+								<p class="ml-2 mb-0 text-dark" >{{ task.title }}</p>
+							</div>
 						</div>
-						<p class="text-truncate text-dark" style="max-width: 250px;">Desc: {{ task.description }}</p>
 					</div>
 					<div  class="col text-center"  >
 						{% if task.category %}
 							<p class="ml-2 mb-0 text-dark" >{{ task.category }}</p>
-							
 						{% endif %}
 					</div>
 					<div class="col">
 						<div class="d-flex justify-content-end">
 							<div class="ml-2">
-								<a class="btn btn-outline-primary" href="{% url 'todo:task_edit' pk=task.pk %}">Edit</a>
+								<a data-task-title="{{  task.title }}" data-task-desc="{{ task.description }}"  data-task-category="{{ task.category }}"class="btn btn-outline-info details-btn">Details</a>
+							</div>
+							<div class="ml-2">
+								{% comment %} <a class="btn btn-outline-primary edit-btn data-task-id="{{  task.pk  }}"" href="{% url 'todo:task_edit' pk=task.pk %}">Edit</a> {% endcomment %}
+								<a class="btn btn-outline-primary edit-btn" data-task-id="{{  task.pk  }}">Edit</a>
+
 							</div>
 							<div class="ml-2">
 								<a class="btn btn-outline-danger" href="{% url 'todo:task_delete' pk=task.pk %}">Remove</a>
@@ -63,6 +66,11 @@
 			</div>
 		</div>
 	<div>
+{% include 'components/modal_details.html' %}	
+
+{% include 'components/modal_edit.html' %}  
+
+
 {% endblock content_wrapper %}
 
 
