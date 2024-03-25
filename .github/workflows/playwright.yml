@@ -43,7 +43,7 @@ jobs:
       run: python -m playwright install --with-deps
 
     - name: Run tests
-      run: pytest --tracing=retain-on-failure --base-url=http://172.18.0.3:8000
+      run: pytest --tracing=retain-on-failure
 
     - name: Stop and remove services
       run: docker-compose down
