@@ -33,7 +33,7 @@ jobs:
     #   run: python -m playwright install --with-deps
 
     - name: Run tests
-      run: pytest --tracing=retain-on-failure
+      run: docker exec lizetes-web-1 pytest --tracing=retain-on-failure
 
     - name: Stop and remove services
       run: docker-compose  -f lizetest/docker-compose.yml down
