@@ -1,10 +1,17 @@
 FROM python:3
+
 ENV PYTHONDONTWRITEBYTECODE=1
+
 ENV PYTHONUNBUFFERED=1
+
 WORKDIR /code
+
 COPY requirements.txt /code/
-RUN pip install -r requirements.txt
-RUN pip install playwright && \
+
+RUN pip install -r requirements.txt && \
+    pip install playwright && \
     playwright install --with-deps
+
 EXPOSE 8000
+
 COPY . /code/
