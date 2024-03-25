@@ -4,6 +4,7 @@ services:
 
   postgres:
     image: postgres
+    container_name: postgres
     volumes:
       - postgres:/var/lib/postgresql/data2
     environment:
@@ -13,6 +14,7 @@ services:
       
   web:
     build: .
+    container_name: lize_server
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - .:/code
