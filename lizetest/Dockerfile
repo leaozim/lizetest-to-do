@@ -6,4 +6,5 @@ COPY requirements.txt /code/
 RUN pip install -r requirements.txt
 RUN pip install playwright && \
     playwright install --with-deps
+EXPOSE 8000
 COPY . /code/
