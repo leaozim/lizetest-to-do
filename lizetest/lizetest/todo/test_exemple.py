@@ -27,7 +27,7 @@ def test_login_page(browser):
 
     page = context.new_page()
 
-    response = page.goto(BASE_URL + '/accounts/login/')
+    response = page.goto('http://172.18.0.3:8000/accounts/login/')
 
     page.fill('input[name="username"]', 'lade')
     page.fill('input[name="password"]', 'caneta@10')
@@ -43,7 +43,7 @@ def test_login_page_error(browser):
     context = browser.new_context()
 
     page = context.new_page()
-    page.goto(BASE_URL + '/accounts/login/')
+    page.goto('/http://172.18.0.3:8000/accounts/login/')
     page.wait_for_timeout(1000)
 
     
@@ -53,7 +53,7 @@ def test_login_page_error(browser):
     page.click('button[type="submit"]')
 
     try:
-        page.wait_for_url(BASE_URL +'/accounts/login/', timeout=5000) 
+        page.wait_for_url('http://172.18.0.3:8000/accounts/login/', timeout=5000) 
     except TimeoutError:
         assert False, "Tempo limite excedido ao aguardar o redirecionamento após o login"
         
