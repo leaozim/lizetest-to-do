@@ -3,6 +3,8 @@ name: Run Tests with Docker Compose
 on:
   push:
     branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
 
 jobs:
   test:
@@ -40,8 +42,13 @@ jobs:
     - name: Ensure browsers are installed
       run: python -m playwright install --with-deps
 
-    - script: pytest
-      displayName: 'Run Playwright tests'
+    - name: Run your tests
+        run: pytest --tracing=retain-on-failure
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: playwright-traces
+          path: test-results/
 
     - name: Stop and remove services
       run: docker-compose down
