@@ -1,32 +1,36 @@
-version: '3'
+name: Run Tests with Docker Compose
 
-services:
+on:
+  push:
+    branches: [ main, master ]
 
-  postgres:
-    image: postgres
-    container_name: postgres
-    volumes:
-      - postgres:/var/lib/postgresql/data2
-    environment:
-      - POSTGRES_DB=postgres
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      
-  web:
-    build: .
-    container_name: lize_server
-    command: python manage.py runserver 0.0.0.0:8000
-    volumes:
-      - .:/code
-    ports:
-      - "8000:8000"
-    environment:
-      - POSTGRES_NAME=postgres
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-    depends_on:
-      - postgres
+jobs:
+  test:
+    runs-on: ubuntu-latest
 
-volumes:
-  postgres:
-    name: postgres_data
+    services:
+      docker:
+        image: docker:20.10.9
+        options: --privileged
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Build and start services
+      run: |
+        docker-compose -f lizetest/docker-compose.yml --env-file lizetest/.env up -d --build
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r lizetest/requirements.txt
+
+    - name: Ensure browsers are installed
+      run: python -m playwright install --with-deps
+
+    - name: Run tests
+      run: pytest --tracing=retain-on-failure
+
+    - name: Stop and remove services
+      run: docker-compose  -f lizetest/docker-compose.yml down
