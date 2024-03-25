@@ -30,9 +30,9 @@ jobs:
     #   uses: actions/setup-python@v2
     #   with:
     #     python-version: '3.11'
-    - name: Wait for server to start
-      run: |
-        while ! nc -z localhost 8000; do sleep 1; done
+    # - name: Wait for server to start
+    #   run: |
+    #     while ! nc -z localhost 8000; do sleep 1; done
         
     - name: Install dependencies
       run: |
