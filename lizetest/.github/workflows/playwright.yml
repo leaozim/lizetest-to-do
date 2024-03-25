@@ -24,7 +24,7 @@ jobs:
         docker-compose -f ./docker-compose.yml --env-file .env up -d --build
 
     - name: Wait for services to start
-      run: sleep 30s  # Adjust the time as needed
+      run: sleep 30s 
 
     - name: Set up Python
       uses: actions/setup-python@v2
@@ -44,3 +44,4 @@ jobs:
 
     - name: Stop and remove services
       run: docker-compose down
+
