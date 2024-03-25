@@ -6,7 +6,7 @@ import pytest
 from playwright.sync_api import sync_playwright
 
 
-BASE_URL = os.getenv("BASE_URL", "http://localhost:8000")
+BASE_URL = os.getenv("http://172.18.0.3:8000")
 
 @pytest.fixture(scope="module")
 def browser():
