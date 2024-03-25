@@ -1,29 +1,47 @@
-name: Playwright Tests
+name: Run Tests with Docker Compose
+
 on:
   push:
     branches: [ main, master ]
-  pull_request:
-    branches: [ main, master ]
+
 jobs:
   test:
-    timeout-minutes: 60
     runs-on: ubuntu-latest
+
+    services:
+      docker:
+        image: docker:20.10.9
+        options: --privileged
+
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
+
+    - name: Build and start services
+      run: |
+        docker-compose up -d --build
+
+    - name: Wait for services to start
+      run: sleep 30s  # Adjust the time as needed
+
     - name: Set up Python
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v2
       with:
         python-version: '3.11'
+
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
+
     - name: Ensure browsers are installed
       run: python -m playwright install --with-deps
-    - name: Run your tests
-      run: pytest --tracing=retain-on-failure
-    - uses: actions/upload-artifact@v4
-      if: always()
-      with:
-        name: playwright-traces
-        path: test-results/
+
+    - script: pytest
+      displayName: 'Run Playwright tests'
+
+    - name: Stop and remove services
+      run: docker-compose down
