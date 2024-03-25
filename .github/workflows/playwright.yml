@@ -40,8 +40,8 @@ jobs:
       run: python -m playwright install --with-deps
 
     - name: Run tests
-      run: pytest --tracing=retain-on-failure
-
+      pytest --tracing=retain-on-failure --base-url=http://localhost:8000
+      
     - name: Stop and remove services
       run: docker-compose down
 
