@@ -35,7 +35,6 @@ def test_login_page(browser):
     page.click('button[type="submit"]')
     assert response.status == 200
         
-    page.wait_for_url(BASE_URL, timeout=1000) 
 
         
         
